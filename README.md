@@ -1,130 +1,97 @@
-# DSFPRL
-DFS-PRL - Anomaly Detection Library
-## Installation
-
-To install DFS-PRL from PyPI, use the following pip command:
-
-```bash
-pip install dfsprl
-Usage
-Once installed, you can use the library to detect anomalies in your data.
-
-Example
-Here is a simple usage example:
-
-python
-Copy
-Edit
-import dfsprl
-
-def main():
-    data = [0.0, 0.1, 0.3, 0.5, 0.7, 1.0, 1.2, 1.4, 2.0]
-    anomalies = dfsprl.detect(data)
-
-    print("Detected Anomalies:")
-    for i, value in enumerate(data):
-        if anomalies[i]:
-            print(f"Data point: {value} is an Anomaly")
-        else:
-            print(f"Data point: {value} is Not an Anomaly")
-
-def ȚdataȚ(data):
-    return dfsprl.detect(data)
-
-if __name__ == "__main__":
-    main()
-How to Use detect()
-The detect() function takes a list or array of data points and returns a list of Boolean values, indicating whether each data point is an anomaly.
-
-Data Format
-The data passed into the detect() function should be in the form of a list or array of numerical values.
-
-Example:
-
-python
-Copy
-Edit
-data = [0.0, 0.1, 0.3, 0.5, 0.7, 1.0, 1.2, 1.4, 2.0]
-Contributing
-Contributions are welcome! Feel free to fork the repository, create an issue, or submit a pull request. All contributions should follow standard Python coding practices.
-
-License
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-pgsql
-Copy
-Edit
-
-This README includes sections for installation, usage examples, and contributions, and can be published on GitHub as the project documentation.
-
-
-
-
-
-
-You said:
-all in md code block
-ChatGPT said:
-Sure! Here's the README.md content with everything inside a markdown code block:
-
-markdown
-Copy
-Edit
 # DFS-PRL - Anomaly Detection Library
 
-DFS-PRL is a Python library designed for anomaly detection in time-series data. This library allows you to detect anomalies in real-time data using an efficient algorithm. It can be integrated into your project to detect outliers and unusual data points.
+![PyPI](https://img.shields.io/pypi/v/dfsprl)
+![License](https://img.shields.io/badge/License-MIT-blue)
+
+DFS-PRL is a Python library designed for efficient anomaly detection in time-series data. Identify outliers and unusual patterns in your datasets with simple integration and real-time capabilities.
+
+## Table of Contents
+- [Installation](#installation)
+- [Quick Start](#quick-start)
+- [Usage](#usage)
+  - [The `detect()` Function](#the-detect-function)
+  - [Data Format Requirements](#data-format-requirements)
+- [Examples](#examples)
+- [Contributing](#contributing)
+- [License](#license)
 
 ## Installation
 
-To install DFS-PRL from PyPI, use the following pip command:
+Install the package from PyPI using pip:
 
 ```bash
 pip install dfsprl
-Usage
-Once installed, you can use the library to detect anomalies in your data.
+```
 
-Example
-Here is a simple usage example:
-
-python
-Copy
-Edit
+## Quick Start
+Get started with anomaly detection in 3 simple steps:
+```python
 import dfsprl
 
-def main():
-    data = [0.0, 0.1, 0.3, 0.5, 0.7, 1.0, 1.2, 1.4, 2.0]
-    anomalies = dfsprl.detect(data)
-
-    print("Detected Anomalies:")
-    for i, value in enumerate(data):
-        if anomalies[i]:
-            print(f"Data point: {value} is an Anomaly")
-        else:
-            print(f"Data point: {value} is Not an Anomaly")
-
-def data(data):
-    return dfsprl.detect(data)
-
-if __name__ == "__main__":
-    main()
-How to Use detect()
-The detect() function takes a list or array of data points and returns a list of Boolean values, indicating whether each data point is an anomaly.
-
-Data Format
-The data passed into the detect() function should be in the form of a list or array of numerical values.
-
-Example:
-
-python
-Copy
-Edit
+# Sample dataset
 data = [0.0, 0.1, 0.3, 0.5, 0.7, 1.0, 1.2, 1.4, 2.0]
-Contributing
-Contributions are welcome! Feel free to fork the repository, create an issue, or submit a pull request. All contributions should follow standard Python coding practices.
 
-License
-This project is licensed under the MIT License - see the LICENSE file for details.
+# Detect anomalies
+anomalies = dfsprl.detect(data)
 
-csharp
-Copy
-Edit
+# Display results
+print("Detected Anomalies:")
+for index, (value, is_anomaly) in enumerate(zip(data, anomalies)):
+    status = "ANOMALY" if is_anomaly else "Normal"
+    print(f"Point {index}: {value:.1f} → {status}")
+```
+## Usage
+The detect() Function
+The core functionality is provided through the detect() method:
+
+def detect(data: list[float], threshold: float = 0.2) -> list[bool]:
+    """
+    Identifies anomalies in numerical data
+    
+    Parameters:
+    data (list[float]): Input data points
+    threshold (float): Sensitivity parameter (default: 0.2)
+    
+    Returns:
+    list[bool]: Boolean mask indicating anomalies (True = anomaly)
+    """
+## Data Format Requirements
+Input data should meet these specifications:
+
+Numerical values (int or float)
+
+Ordered sequentially (time-series preferred)
+
+Minimum 10 data points for reliable detection
+
+Example valid input: 
+temperature_readings = [22.1, 22.3, 22.4, 22.5, 23.8, 22.2, 22.3, 45.6, 22.3]
+
+## Examples
+import dfsprl
+
+sales_data = [120, 125, 130, 118, 115, 122, 350, 116, 121]
+anomalies = dfsprl.detect(sales_data)
+
+print(f"Anomaly positions: {[i for i, val in enumerate(anomalies) if val]}")
+# Output: Anomaly positions: [6]
+# Increase sensitivity with lower threshold
+sensitive_anomalies = dfsprl.detect(data, threshold=0.1)
+
+# Decrease sensitivity with higher threshold
+relaxed_anomalies = dfsprl.detect(data, threshold=0.3)
+
+## Contributing
+We welcome contributions! Please follow these steps:
+
+Fork the repository
+
+Create your feature branch (git checkout -b feature/amazing-feature)
+
+Commit your changes (git commit -m 'Add amazing feature')
+
+Push to the branch (git push origin feature/amazing-feature)
+
+Open a Pull Request
+
+Ensure all code follows PEP-8 guidelines and includes appropriate tests.
